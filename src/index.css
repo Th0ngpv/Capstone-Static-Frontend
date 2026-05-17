@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
 /* ===== RESET ===== */
 *,
 *::before,
@@ -84,9 +85,11 @@ body {
   --text-xl: 1.25rem;
 
   /* FONTS */
-  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-display: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
-  --font-mono: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --font-display: "Playfair Display", Georgia, serif;
+
+  --font-mono: ui-monospace, SFMono-Regular, monospace;
 
   /* SHADOW */
   --shadow-sm: 0 2px 4px rgba(15, 20, 28, 0.06);
