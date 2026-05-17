@@ -85,9 +85,6 @@
 
 /* ===== CONTENT ===== */
 
-.layout-content {
-  padding: 2rem;
-}
 
 /* ===== DARK MODE ===== */
 
@@ -124,9 +121,5 @@
 @media (max-width: 800px) {
   .layout {
     grid-template-columns: 1fr;
-  }
-
-  .layout-content {
-    padding: 1rem;
   }
 }
