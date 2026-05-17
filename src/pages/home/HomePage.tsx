@@ -10,16 +10,15 @@ export default function HomePage() {
       {/* Hero Section */}
       <section className="home-hero">
         <div className="home-hero__content">
-          <span className="home-badge">Smart Financial Planning Platform</span>
+          <span className="home-badge">Wealth OS • Smart Financial Planning Platform</span>
 
           <h1 className="home-title">
-            Take Control Of Your
-            <span> Financial Future</span>
+            Build Your Future With
+            <span> Wealth OS</span>
           </h1>
 
           <p className="home-description">
-            Track your cashflow, manage your portfolio, create savings goals,
-            and receive AI-powered financial coaching all in one platform.
+            Wealth OS helps you track cashflow, manage investments, plan savings goals, and receive AI-powered financial guidance through a modern all-in-one financial platform.
           </p>
 
           <div className="home-actions">

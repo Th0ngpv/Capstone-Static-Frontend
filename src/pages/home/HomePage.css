@@ -1,10 +1,10 @@
 .home-page {
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(99, 102, 241, 0.2), transparent 30%),
-    radial-gradient(circle at bottom right, rgba(16, 185, 129, 0.2), transparent 30%),
-    #0f172a;
-  color: #ffffff;
+    radial-gradient(circle at top left, color-mix(in srgb, var(--brand-500) 18%, transparent), transparent 30%),
+    radial-gradient(circle at bottom right, color-mix(in srgb, var(--info) 18%, transparent), transparent 30%),
+    var(--ink-900);
+  color: var(--ink-0);
 }
 
 .home-hero {
@@ -22,53 +22,53 @@
 
 .home-badge {
   display: inline-flex;
-  padding: 0.5rem 1rem;
+  padding: var(--space-2) var(--space-4);
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  font-size: 0.85rem;
-  margin-bottom: 1.5rem;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-5);
 }
 
 .home-title {
   font-size: clamp(3rem, 7vw, 5.5rem);
   line-height: 1.1;
   font-weight: 800;
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--space-5);
 }
 
 .home-title span {
-  color: #60a5fa;
+  color: var(--brand-300);
 }
 
 .home-description {
-  font-size: 1.1rem;
+  font-size: var(--text-lg);
   line-height: 1.8;
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 2.5rem;
+  margin-bottom: var(--space-6);
 }
 
 .home-actions {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-4);
   flex-wrap: wrap;
 }
 
 .home-primary-btn,
 .home-secondary-btn {
   border: none;
-  border-radius: 16px;
+  border-radius: var(--r-xl);
   padding: 1rem 1.8rem;
-  font-size: 1rem;
+  font-size: var(--text-md);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
 }
 
 .home-primary-btn {
-  background: linear-gradient(135deg, #3b82f6, #6366f1);
-  color: white;
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.25);
+  background: linear-gradient(135deg, var(--brand-400), var(--brand-600));
+  color: var(--ink-0);
+  box-shadow: 0 20px 40px rgba(18, 162, 119, 0.25);
 }
 
 .home-primary-btn:hover {
@@ -77,7 +77,7 @@
 
 .home-secondary-btn {
   background: rgba(255, 255, 255, 0.08);
-  color: white;
+  color: var(--ink-0);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -93,8 +93,8 @@
 .hero-card {
   width: 100%;
   max-width: 420px;
-  padding: 2rem;
-  border-radius: 32px;
+  padding: var(--space-6);
+  border-radius: 2rem;
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -105,18 +105,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-6);
 }
 
 .hero-card__label {
   color: rgba(255, 255, 255, 0.6);
-  margin-bottom: 0.5rem;
+  margin-bottom: var(--space-2);
 }
 
 .hero-card__trend {
-  background: rgba(16, 185, 129, 0.15);
-  color: #34d399;
-  padding: 0.5rem 0.8rem;
+  background: rgba(18, 162, 119, 0.15);
+  color: var(--brand-300);
+  padding: var(--space-2) var(--space-3);
   border-radius: 999px;
   font-weight: 700;
 }
@@ -125,13 +125,13 @@
   height: 220px;
   display: flex;
   align-items: flex-end;
-  gap: 1rem;
+  gap: var(--space-4);
 }
 
 .chart-bar {
   flex: 1;
-  border-radius: 16px 16px 0 0;
-  background: linear-gradient(180deg, #60a5fa, #2563eb);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+  background: linear-gradient(180deg, var(--brand-300), var(--brand-600));
 }
 
 .chart-bar--1 {
@@ -164,24 +164,24 @@
 }
 
 .section-heading span {
-  color: #60a5fa;
+  color: var(--brand-300);
   font-weight: 600;
 }
 
 .section-heading h2 {
   font-size: clamp(2rem, 5vw, 3.5rem);
-  margin-top: 1rem;
+  margin-top: var(--space-4);
 }
 
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
+  gap: var(--space-5);
 }
 
 .feature-card {
-  padding: 2rem;
-  border-radius: 24px;
+  padding: var(--space-6);
+  border-radius: 1.5rem;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.25s ease;
@@ -194,11 +194,11 @@
 
 .feature-icon {
   font-size: 2.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .feature-card h3 {
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .feature-card p {
@@ -213,19 +213,23 @@
 .home-cta__content {
   text-align: center;
   padding: 4rem 2rem;
-  border-radius: 32px;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(99, 102, 241, 0.2));
+  border-radius: 2rem;
+  background: linear-gradient(
+    135deg,
+    rgba(18, 162, 119, 0.2),
+    rgba(47, 108, 219, 0.2)
+  );
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .home-cta__content h2 {
   font-size: clamp(2rem, 5vw, 3rem);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-4);
 }
 
 .home-cta__content p {
   color: rgba(255, 255, 255, 0.7);
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-6);
 }
 
 @media (max-width: 900px) {
