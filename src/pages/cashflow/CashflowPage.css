@@ -532,3 +532,53 @@
     background: rgba(0, 0, 0, 0.72);
   }
 }
+
+/* ── Form additions ── */
+.cashflow-form-toggle {
+  display: flex;
+  border: 1px solid var(--border, #e1e7ee);
+  border-radius: 0.625rem;
+  overflow: hidden;
+  margin-bottom: 0.25rem;
+}
+
+.cashflow-form-toggle button {
+  flex: 1;
+  background: var(--surface, #fff);
+  color: #6c7786;
+  border: none;
+  border-radius: 0;
+  padding: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 0.15s, color 0.15s;
+}
+
+.cashflow-form-toggle button.active {
+  background: rgba(18, 162, 119, 0.12);
+  color: #12a277;
+}
+
+.cashflow-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cashflow-form-field label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #495361;
+}
+
+.cashflow-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 480px) {
+  .cashflow-form-row { grid-template-columns: 1fr; }
+}
