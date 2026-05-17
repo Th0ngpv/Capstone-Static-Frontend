@@ -8,10 +8,12 @@ import CashflowPage from './pages/cashflow/CashflowPage';
 import PortfolioPage from './pages/portfolio/PortfolioPage';
 import MarketPlacePage from './pages/marketplace/MarketPlacePage';
 import CoachPage from './pages/coach/CoachPage';
+import HomePage from './pages/home/HomePage';
 
 function App() {
   return (
     <Routes>
+      <Route path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/auth/success" element={<Navigate to="/dashboard" replace />} />
       <Route path="/dashboard" element={<Layout><DashboardPage /></Layout>} />
