@@ -7,7 +7,7 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 
-import './MarketplacePage.css';
+import './MarketPlacePage.css';
 
 const products = [
   {
