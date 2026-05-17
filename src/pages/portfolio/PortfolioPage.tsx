@@ -65,12 +65,42 @@ function formatCurrency(value: number) {
 }
 
 export default function PortfolioPage() {
+  const [assets, setAssets] = useState<Asset[]>(mockAssets);
   const [showModal, setShowModal] = useState(false);
 
   const [activeTab, setActiveTab] =
     useState<'overview' | 'plan'>('overview');
 
-  const assets = mockAssets;
+  const [form, setForm] = useState({
+    name: '',
+    value: '',
+    category: 'Chứng khoán',
+    icon: '📈',
+    note: '',
+  });
+
+  const CATEGORIES = [
+    { label: 'Chứng khoán', icon: '📈' },
+    { label: 'Crypto', icon: '₿' },
+    { label: 'Tiền mặt', icon: '💵' },
+    { label: 'Bất động sản', icon: '🏠' },
+    { label: 'Vàng', icon: '✨' },
+    { label: 'Khác', icon: '💼' },
+  ];
+
+  function handleSave() {
+    if (!form.name || !form.value) return;
+    const cat = CATEGORIES.find((c) => c.label === form.category);
+    setAssets((prev) => [...prev, {
+      id: crypto.randomUUID(),
+      category: form.category,
+      name: form.name,
+      value: Number(form.value),
+      icon: cat?.icon ?? '💼',
+    }]);
+    setForm({ name: '', value: '', category: 'Chứng khoán', icon: '📈', note: '' });
+    setShowModal(false);
+  }
 
   const totalAssets = useMemo(() => {
     return assets.reduce(
@@ -453,38 +483,39 @@ export default function PortfolioPage() {
               </button>
             </div>
 
-            <form className="portfolio-form">
+            <form className="portfolio-form" onSubmit={(e) => { e.preventDefault(); handleSave(); }}>
+              <div className="portfolio-field">
+                <label>Danh mục</label>
+                <select className="portfolio-input"
+                  value={form.category}
+                  onChange={(e) => setForm((f) => ({ ...f, category: e.target.value }))}>
+                  {CATEGORIES.map((c) => (
+                    <option key={c.label} value={c.label}>{c.icon} {c.label}</option>
+                  ))}
+                </select>
+              </div>
+
               <div className="portfolio-form-row">
                 <div className="portfolio-field">
-                  <label>
-                    Tên tài sản
-                  </label>
-
-                  <input
-                    className="portfolio-input"
-                    placeholder="Ví dụ: VCB"
-                  />
+                  <label>Tên tài sản</label>
+                  <input className="portfolio-input" placeholder="Ví dụ: VCB"
+                    value={form.name} required
+                    onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))} />
                 </div>
 
                 <div className="portfolio-field">
-                  <label>
-                    Giá trị
-                  </label>
-
-                  <input
-                    className="portfolio-input"
-                    placeholder="500000000"
-                  />
+                  <label>Giá trị (VND)</label>
+                  <input className="portfolio-input" type="number" min="0" placeholder="500000000"
+                    value={form.value} required
+                    onChange={(e) => setForm((f) => ({ ...f, value: e.target.value }))} />
                 </div>
               </div>
 
               <div className="portfolio-field">
                 <label>Ghi chú</label>
-
-                <textarea
-                  className="portfolio-input portfolio-textarea"
-                  placeholder="Mô tả thêm..."
-                />
+                <textarea className="portfolio-input portfolio-textarea" placeholder="Mô tả thêm..."
+                  value={form.note}
+                  onChange={(e) => setForm((f) => ({ ...f, note: e.target.value }))} />
               </div>
             </form>
 
@@ -502,6 +533,7 @@ export default function PortfolioPage() {
               <button
                 type="button"
                 className="portfolio-btn-save"
+                onClick={handleSave}
               >
                 Lưu tài sản
               </button>
