@@ -193,7 +193,7 @@ export default function PortfolioPage() {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                    formatter={(value) => [formatCurrency(Number(value ?? 0)), '']}
                     contentStyle={{
                       borderRadius: '0.75rem',
                       border: '1px solid #e1e7ee',
@@ -277,7 +277,7 @@ export default function PortfolioPage() {
                     ))}
                   </Pie>
                   <Tooltip
-                    formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                    formatter={(value) => [formatCurrency(Number(value ?? 0)), '']}
                     contentStyle={{
                       borderRadius: '0.75rem',
                       border: '1px solid #e1e7ee',
