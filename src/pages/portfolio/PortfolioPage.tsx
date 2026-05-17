@@ -4,6 +4,7 @@ import {
   Pie,
   PieChart,
   Cell,
+  Tooltip,
   ResponsiveContainer,
 } from 'recharts';
 
@@ -183,13 +184,26 @@ export default function PortfolioPage() {
               <p>Tỷ trọng tài sản hiện tại</p>
             </div>
             <div className="portfolio-chart-wrapper">
-              <ResponsiveContainer width="100%" height={320}>
+              <ResponsiveContainer width="100%" height={320} style={{ background: 'transparent' }}>
                 <PieChart>
-                  <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={85} outerRadius={120} paddingAngle={2}>
+                  <Pie data={chartData} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={85} outerRadius={120} paddingAngle={2} stroke="none"
+                    activeShape={false} isAnimationActive={true}>
                     {chartData.map((_, index) => (
                       <Cell key={index} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
+                  <Tooltip
+                    formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                    contentStyle={{
+                      borderRadius: '0.75rem',
+                      border: '1px solid #e1e7ee',
+                      fontSize: '0.8rem',
+                      fontFamily: 'inherit',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    }}
+                    itemStyle={{ color: '#1f2530' }}
+                    labelStyle={{ display: 'none' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
               <div className="portfolio-chart-center">
@@ -262,6 +276,18 @@ export default function PortfolioPage() {
                       <Cell key={index} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
+                  <Tooltip
+                    formatter={(value: number, name: string) => [formatCurrency(value), name]}
+                    contentStyle={{
+                      borderRadius: '0.75rem',
+                      border: '1px solid #e1e7ee',
+                      fontSize: '0.8rem',
+                      fontFamily: 'inherit',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                    }}
+                    itemStyle={{ color: '#1f2530' }}
+                    labelStyle={{ display: 'none' }}
+                  />
                 </PieChart>
               </ResponsiveContainer>
             </div>
