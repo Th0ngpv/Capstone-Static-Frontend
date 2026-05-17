@@ -1,0 +1,534 @@
+/* ===== PAGE ===== */
+
+.cashflow-page {
+  padding: var(--space-6) var(--space-4);
+}
+
+/* ===== HEADER ===== */
+
+.cashflow-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: var(--space-4);
+
+  margin-bottom: var(--space-6);
+}
+
+.cashflow-header h1 {
+  margin-bottom: var(--space-1);
+}
+
+.cashflow-header p {
+  margin: 0;
+
+  color: var(--ink-500);
+}
+
+/* ===== BUTTONS ===== */
+
+.cashflow-btn-add,
+.cashflow-form button,
+.cashflow-card-footer button {
+  border: none;
+  border-radius: var(--r-md);
+
+  font-size: var(--text-sm);
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* Primary button */
+
+.cashflow-btn-add,
+.cashflow-form button {
+  background: var(--brand-500);
+  color: white;
+
+  padding: 0.8rem 1.2rem;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.cashflow-btn-add:hover,
+.cashflow-form button:hover {
+  background: var(--brand-600);
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.16);
+}
+
+.cashflow-btn-add:active,
+.cashflow-form button:active {
+  transform: scale(0.98);
+}
+
+/* Secondary card button */
+
+.cashflow-card-footer button {
+  background: var(--brand-100);
+  color: var(--brand-700);
+
+  padding: 0.5rem 0.95rem;
+}
+
+.cashflow-card-footer button:hover {
+  background: var(--brand-200);
+
+  transform: translateY(-1px);
+}
+
+/* ===== SUMMARY ===== */
+
+.cashflow-summary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: var(--space-4);
+
+  margin-bottom: var(--space-6);
+}
+
+.cashflow-summary-card {
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+
+  padding: var(--space-5);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.cashflow-summary-card span {
+  display: block;
+
+  margin-bottom: var(--space-2);
+
+  color: var(--ink-500);
+
+  font-size: var(--text-sm);
+}
+
+.cashflow-summary-card h2 {
+  margin: 0;
+
+  font-size: 1.75rem;
+}
+
+/* ===== CHART ===== */
+
+.cashflow-chart-section {
+  margin-bottom: var(--space-6);
+}
+
+.cashflow-chart-card {
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+
+  padding: var(--space-5);
+
+  box-shadow: var(--shadow-sm);
+}
+
+.cashflow-chart-header {
+  margin-bottom: var(--space-4);
+}
+
+.cashflow-chart-header h2 {
+  margin: 0;
+}
+
+.cashflow-chart-wrapper {
+  width: 100%;
+  height: 320px;
+}
+
+/* ===== TABS ===== */
+
+.cashflow-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+
+  margin-bottom: var(--space-5);
+}
+
+.cashflow-tabs button {
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+
+  background: var(--surface);
+
+  padding: 0.65rem 1rem;
+
+  color: var(--ink-600);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.cashflow-tabs button:hover {
+  background: var(--ink-100);
+}
+
+.cashflow-tabs button.active {
+  background: var(--brand-500);
+
+  border-color: var(--brand-500);
+
+  color: white;
+}
+
+/* ===== GRID ===== */
+
+.cashflow-grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(300px, 1fr)
+  );
+
+  gap: var(--space-4);
+}
+
+/* ===== CARD ===== */
+
+.cashflow-card {
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+
+  padding: var(--space-5);
+
+  box-shadow: var(--shadow-sm);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cashflow-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.cashflow-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: var(--space-4);
+}
+
+.cashflow-card-top strong {
+  font-size: 1.1rem;
+}
+
+.cashflow-card h3 {
+  margin-bottom: var(--space-2);
+}
+
+.cashflow-card p {
+  margin: 0;
+
+  color: var(--ink-500);
+}
+
+.cashflow-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-top: var(--space-5);
+}
+
+.cashflow-card-footer span {
+  color: var(--ink-400);
+
+  font-size: var(--text-sm);
+}
+
+/* ===== BADGE ===== */
+
+.cashflow-badge {
+  padding: 0.35rem 0.7rem;
+
+  border-radius: 999px;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+
+  text-transform: capitalize;
+}
+
+.cashflow-badge.income {
+  background: var(--pos-soft);
+
+  color: var(--pos);
+}
+
+.cashflow-badge.expense {
+  background: var(--neg-soft);
+
+  color: var(--neg);
+}
+
+/* ===== OVERLAY ===== */
+
+.cashflow-overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 1rem;
+
+  background: rgba(10, 15, 25, 0.68);
+
+  backdrop-filter: blur(4px);
+
+  z-index: 999;
+}
+
+/* ===== MODAL ===== */
+
+.cashflow-modal {
+  width: 100%;
+  max-width: 520px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+  overflow: hidden;
+
+  animation: cashflowModalIn 0.2s ease;
+}
+
+@keyframes cashflowModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.cashflow-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: var(--space-5);
+
+  border-bottom: 1px solid var(--border);
+}
+
+.cashflow-modal-header h2 {
+  margin: 0;
+}
+
+.cashflow-modal-header button {
+  border: none;
+  background: transparent;
+
+  color: var(--ink-500);
+
+  font-size: 1.2rem;
+
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.cashflow-modal-header button:hover {
+  color: var(--ink-900);
+}
+
+/* ===== FORM ===== */
+
+.cashflow-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  padding: var(--space-5);
+}
+
+.cashflow-form input,
+.cashflow-form select,
+.cashflow-form textarea {
+  width: 100%;
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+
+  background: var(--bg);
+
+  padding: 0.9rem 1rem;
+
+  font-family: inherit;
+  font-size: var(--text-sm);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.cashflow-form input:focus,
+.cashflow-form select:focus,
+.cashflow-form textarea:focus {
+  outline: none;
+
+  border-color: var(--brand-400);
+
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.cashflow-form textarea {
+  min-height: 110px;
+
+  resize: vertical;
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 768px) {
+  .cashflow-page {
+    padding: 1rem;
+  }
+
+  .cashflow-header {
+    flex-direction: column;
+  }
+
+  .cashflow-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .cashflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cashflow-chart-wrapper {
+    height: 260px;
+  }
+
+  .cashflow-modal {
+    max-height: 90vh;
+
+    overflow-y: auto;
+  }
+}
+
+.cashflow-container {
+  width: 100%;
+  max-width: 1400px;
+
+  margin: 0 auto;
+}
+.cashflow-chart-card {
+  padding: var(--space-5);
+}
+
+.cashflow-grid {
+  display: grid;
+
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(320px, 1fr)
+  );
+
+  gap: var(--space-4);
+}
+
+.cashflow-modal {
+  position: relative;
+
+  z-index: 1001;
+}
+
+.cashflow-overlay {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ===== DARK MODE ===== */
+
+@media (prefers-color-scheme: dark) {
+  .cashflow-summary-card,
+  .cashflow-card,
+  .cashflow-chart-card,
+  .cashflow-modal {
+    background: #10151d;
+
+    border-color: #222a37;
+  }
+
+  .cashflow-header p,
+  .cashflow-card p,
+  .cashflow-card-footer span {
+    color: #94a3b8;
+  }
+
+  .cashflow-tabs button {
+    background: #10151d;
+
+    border-color: #222a37;
+
+    color: #cbd5e1;
+  }
+
+  .cashflow-tabs button:hover {
+    background: #18212d;
+  }
+
+  .cashflow-form input,
+  .cashflow-form select,
+  .cashflow-form textarea {
+    background: #0f1720;
+
+    border-color: #222a37;
+
+    color: white;
+  }
+
+  .cashflow-modal-header button:hover {
+    color: white;
+  }
+
+  .cashflow-overlay {
+    background: rgba(0, 0, 0, 0.72);
+  }
+}

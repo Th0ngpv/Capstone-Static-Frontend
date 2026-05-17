@@ -1,0 +1,120 @@
+/* ===== SIDEBAR ===== */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 100vh;
+  padding: 1.5rem 1rem;
+
+  border-right: 1px solid var(--border);
+
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(18px);
+}
+
+/* ===== LOGO ===== */
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+
+  margin-bottom: 2rem;
+}
+
+.logo-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 0.85rem;
+
+  background: linear-gradient(
+    135deg,
+    var(--brand-400),
+    var(--brand-600)
+  );
+
+  color: white;
+  font-weight: 700;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-text strong {
+  font-size: 1rem;
+}
+
+.logo-text span {
+  color: var(--ink-500);
+
+  font-size: 0.75rem;
+}
+
+/* ===== NAVIGATION ===== */
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.sidebar-nav a {
+  padding: 0.85rem 1rem;
+
+  border-radius: 0.9rem;
+
+  color: var(--ink-700);
+  text-decoration: none;
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.sidebar-nav a:hover,
+.sidebar-nav .active {
+  background: rgba(18, 162, 119, 0.12);
+
+  color: var(--brand-600);
+}
+
+/* ===== DARK MODE ===== */
+
+@media (prefers-color-scheme: dark) {
+  .sidebar {
+    background: rgba(15, 20, 28, 0.72);
+
+    border-color: rgba(203, 211, 221, 0.12);
+  }
+
+  .logo-text span {
+    color: var(--ink-400);
+  }
+
+  .sidebar-nav a {
+    color: var(--ink-300);
+  }
+
+  .sidebar-nav a:hover,
+  .sidebar-nav .active {
+    background: rgba(18, 162, 119, 0.16);
+
+    color: var(--brand-300);
+  }
+}
+
+/* ===== MOBILE ===== */
+
+@media (max-width: 800px) {
+  .sidebar {
+    display: none;
+  }
+}
