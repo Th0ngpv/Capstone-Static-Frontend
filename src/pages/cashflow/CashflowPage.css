@@ -120,8 +120,9 @@
 
 .cashflow-summary-card h2 {
   margin: 0;
-
   font-size: 1.75rem;
+  font-family: var(--font-sans);
+  font-weight: 600;
 }
 
 /* ===== CHART ===== */
@@ -197,10 +198,7 @@
 
 .cashflow-grid {
   display: grid;
-  grid-template-columns: repeat(
-    auto-fill,
-    minmax(300px, 1fr)
-  );
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 
   gap: var(--space-4);
 }
@@ -460,10 +458,7 @@
 .cashflow-grid {
   display: grid;
 
-  grid-template-columns: repeat(
-    auto-fit,
-    minmax(320px, 1fr)
-  );
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
 
   gap: var(--space-4);
 }
