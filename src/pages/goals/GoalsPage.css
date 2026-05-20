@@ -819,3 +819,136 @@
 .priority-P5 {
   background: #64748b;
 }
+
+/* ===== OVERLAY ===== */
+
+.goals-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--space-4);
+
+  background: rgba(15, 20, 28, 0.55);
+  backdrop-filter: blur(8px);
+}
+
+/* ===== MODAL ===== */
+
+.goals-modal {
+  width: 100%;
+  max-width: 560px;
+
+  background: var(--surface);
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-xl);
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.2),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+
+  overflow: hidden;
+
+  animation: goalsModalIn 0.2s ease;
+}
+
+@keyframes goalsModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.goals-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: var(--space-5);
+
+  border-bottom: 1px solid var(--border);
+}
+
+.goals-modal-header h2 {
+  margin: 0;
+
+  color: var(--ink-50);
+  font-size: var(--text-lg);
+}
+
+.goals-modal-header button {
+  border: none;
+  background: transparent;
+
+  color: var(--ink-500);
+
+  font-size: 1.2rem;
+
+  cursor: pointer;
+
+  transition: color 0.2s ease;
+}
+
+.goals-modal-header button:hover {
+  color: var(--ink-900);
+}
+
+/* ===== FORM ===== */
+
+.goals-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+
+  padding: var(--space-5);
+}
+
+.goals-form input,
+.goals-form select,
+.goals-form textarea {
+  width: 100%;
+
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+
+  background: var(--bg);
+
+  padding: 0.9rem 1rem;
+
+  font-family: inherit;
+  font-size: var(--text-sm);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.goals-form input:focus,
+.goals-form select:focus,
+.goals-form textarea:focus {
+  outline: none;
+
+  border-color: var(--brand-400);
+
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+}
+
+.goals-form textarea {
+  min-height: 110px;
+
+  resize: vertical;
+}
+
+.goals-submit-btn {
+  margin-top: var(--space-2);
+}

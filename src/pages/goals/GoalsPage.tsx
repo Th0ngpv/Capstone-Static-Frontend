@@ -96,7 +96,7 @@ function getMonthsLeft(dateString: string) {
 
   const months =
     (deadline.getFullYear() - now.getFullYear()) *
-      12 +
+    12 +
     deadline.getMonth() -
     now.getMonth();
 
@@ -182,7 +182,7 @@ export default function GoalsPage() {
         34 +
         (index /
           (projectionMonths.length - 1)) *
-          498;
+        498;
 
       const y =
         176 - (value / chartMax) * 130;
@@ -195,8 +195,7 @@ export default function GoalsPage() {
   const chartLine = chartPoints
     .map(
       (point, index) =>
-        `${index === 0 ? 'M' : 'L'} ${
-          point.x
+        `${index === 0 ? 'M' : 'L'} ${point.x
         } ${point.y}`,
     )
     .join(' ');
@@ -229,83 +228,77 @@ export default function GoalsPage() {
         </button>
       </section>
 
-      {/* create form */}
+      {/* modal */}
       {isFormOpen && (
-        <section className="goals-form-panel">
-          <div className="goals-form-heading">
-            <h2>Tạo mục tiêu</h2>
+        <div
+          className="goals-overlay"
+          onClick={() =>
+            setIsFormOpen(false)
+          }
+        >
+          <div
+            className="goals-modal"
+            onClick={(event) =>
+              event.stopPropagation()
+            }
+          >
+            <div className="goals-modal-header">
+              <h2>Tạo mục tiêu</h2>
 
-            <button
-              type="button"
-              onClick={() =>
-                setIsFormOpen(false)
-              }
-            >
-              Đóng
-            </button>
-          </div>
+              <button
+                type="button"
+                onClick={() =>
+                  setIsFormOpen(false)
+                }
+              >
+                ✕
+              </button>
+            </div>
 
-          <form className="goals-form">
-            <label>
-              Tên mục tiêu
+            <form className="goals-form">
               <input
                 type="text"
                 value="Mua căn hộ"
                 readOnly
               />
-            </label>
 
-            <label>
-              Loại mục tiêu
               <select
                 value="mua nhà"
                 disabled
               >
                 <option>Mua nhà</option>
               </select>
-            </label>
 
-            <label>
-              Độ ưu tiên
               <select value="P1" disabled>
                 <option>P1 - Quan trọng</option>
               </select>
-            </label>
 
-            <label>
-              Ghi chú
               <textarea
                 value="Tiết kiệm để mua căn hộ đầu tiên"
                 readOnly
               />
-            </label>
 
-            <label>
-              Số tiền mục tiêu
               <input
                 type="number"
                 value="2500000000"
                 readOnly
               />
-            </label>
 
-            <label>
-              Hạn hoàn thành
               <input
                 type="date"
                 value="2028-06-01"
                 readOnly
               />
-            </label>
 
-            <button
-              className="goals-submit-btn"
-              type="button"
-            >
-              Thêm mục tiêu
-            </button>
-          </form>
-        </section>
+              <button
+                className="goals-submit-btn"
+                type="button"
+              >
+                Thêm mục tiêu
+              </button>
+            </form>
+          </div>
+        </div>
       )}
 
       {/* goals grid */}
@@ -318,11 +311,10 @@ export default function GoalsPage() {
           return (
             <article
               key={goal.id}
-              className={`goal-card ${
-                goal.id === selectedGoal.id
-                  ? 'is-selected'
-                  : ''
-              }`}
+              className={`goal-card ${goal.id === selectedGoal.id
+                ? 'is-selected'
+                : ''
+                }`}
               onClick={() =>
                 setSelectedGoalId(goal.id)
               }
