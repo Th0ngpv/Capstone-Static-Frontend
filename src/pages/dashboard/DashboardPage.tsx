@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import {
   ArrowUpRight,
   ArrowDownRight,
@@ -12,8 +12,43 @@ import {
 } from 'lucide-react';
 
 import './DashboardPage.css';
+import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
+
 
 export default function DashboardPage() {
+  const [range, setRange] = useState('6m');
+  const chartData = {
+    '6m': [
+      { name: 'Jan', income: 4000, expense: 2400 },
+      { name: 'Feb', income: 3000, expense: 1398 },
+      { name: 'Mar', income: 5000, expense: 3200 },
+      { name: 'Apr', income: 2780, expense: 3908 },
+      { name: 'May', income: 1890, expense: 2800 },
+      { name: 'Jun', income: 2390, expense: 3800 },
+    ],
+
+    '12m': [
+      { name: 'Jan', income: 4000, expense: 2400 },
+      { name: 'Feb', income: 3000, expense: 1398 },
+      { name: 'Mar', income: 5000, expense: 3200 },
+      { name: 'Apr', income: 2780, expense: 3908 },
+      { name: 'May', income: 1890, expense: 2800 },
+      { name: 'Jun', income: 2390, expense: 3800 },
+      { name: 'Jul', income: 3490, expense: 2100 },
+      { name: 'Aug', income: 4200, expense: 3000 },
+      { name: 'Sep', income: 2800, expense: 2600 },
+      { name: 'Oct', income: 3900, expense: 3200 },
+      { name: 'Nov', income: 4300, expense: 3500 },
+      { name: 'Dec', income: 5000, expense: 4100 },
+    ],
+
+    year: [
+      { name: 'Q1', income: 12000, expense: 7000 },
+      { name: 'Q2', income: 14000, expense: 9000 },
+      { name: 'Q3', income: 11000, expense: 8500 },
+      { name: 'Q4', income: 16000, expense: 10000 },
+    ],
+  };
   const summaryData = useMemo(
     () => [
       {
@@ -138,11 +173,10 @@ export default function DashboardPage() {
               </div>
 
               <div
-                className={`dashboard-summary-card__change ${
-                  item.positive
-                    ? 'dashboard-summary-card__change--positive'
-                    : 'dashboard-summary-card__change--negative'
-                }`}
+                className={`dashboard-summary-card__change ${item.positive
+                  ? 'dashboard-summary-card__change--positive'
+                  : 'dashboard-summary-card__change--negative'
+                  }`}
               >
                 {item.positive ? (
                   <ArrowUpRight size={16} />
@@ -168,25 +202,57 @@ export default function DashboardPage() {
           <div className="dashboard-card__header">
             <div>
               <h2>Cash Flow Overview</h2>
-              <p>Income vs expenses in the last 6 months</p>
+
+              <p>
+                {range === '6m' &&
+                  'Income vs expenses in the last 6 months'}
+
+                {range === '12m' &&
+                  'Income vs expenses in the last 12 months'}
+
+                {range === 'year' &&
+                  'Income vs expenses this year'}
+              </p>
             </div>
 
-            <select>
-              <option>Last 6 Months</option>
-              <option>Last 12 Months</option>
-              <option>This Year</option>
+            <select
+              value={range}
+              onChange={(event) =>
+                setRange(event.target.value)
+              }
+            >
+              <option value="6m">Last 6 Months</option>
+
+              <option value="12m">
+                Last 12 Months
+              </option>
+
+              <option value="year">This Year</option>
             </select>
           </div>
 
           <div className="dashboard-chart-placeholder">
-            <div className="dashboard-chart-bars">
-              <div className="dashboard-chart-bar" style={{ height: '40%' }} />
-              <div className="dashboard-chart-bar" style={{ height: '65%' }} />
-              <div className="dashboard-chart-bar" style={{ height: '52%' }} />
-              <div className="dashboard-chart-bar" style={{ height: '78%' }} />
-              <div className="dashboard-chart-bar" style={{ height: '92%' }} />
-              <div className="dashboard-chart-bar" style={{ height: '68%' }} />
-            </div>
+            <ResponsiveContainer
+              width="100%"
+              maxHeight={280}
+              aspect={1.618}
+            >
+              <BarChart data={range === '6m' ? chartData['6m'] : range === '12m' ? chartData['12m'] : chartData['year']}>
+                <XAxis dataKey="name" />
+
+                <Tooltip />
+
+                <Bar
+                  dataKey="income"
+                  fill="var(--brand-400)"
+                />
+
+                <Bar
+                  fill="var(--neg)"
+                  dataKey="expense"
+                />
+              </BarChart>
+            </ResponsiveContainer>
           </div>
         </article>
 
