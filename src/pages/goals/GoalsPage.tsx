@@ -302,7 +302,10 @@ export default function GoalsPage() {
       )}
 
       {/* goals grid */}
-      <section className="goals-grid">
+      <section className="goals-grid"
+        onWheel={(event) => {
+          event.currentTarget.scrollLeft += event.deltaY;
+        }}>
         {goals.map((goal) => {
           const monthsLeft = getMonthsLeft(
             goal.deadline,
