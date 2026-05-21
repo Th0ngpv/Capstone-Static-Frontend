@@ -233,7 +233,7 @@
   border-radius: 999px;
   padding: 0.25rem 0.55rem;
   background: var(--pos-soft);
-  color: var(--pos);
+  color: var(--ink-50);
   font-size: 0.75rem;
   font-weight: 700;
 }
@@ -361,8 +361,11 @@
 
 .goal-stats {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
   gap: var(--space-4);
+
   margin-bottom: var(--space-5);
 }
 
@@ -726,7 +729,7 @@
   .goal-card__badge,
   .goal-panel-heading span {
     background: rgba(18, 162, 119, 0.18);
-    color: var(--brand-300);
+    color: var(--ink-50);
   }
 
   .goal-card__progress {
@@ -787,12 +790,6 @@
   .goals-header {
     align-items: flex-start;
     flex-direction: column;
-  }
-
-  .goals-grid,
-  .goals-form,
-  .goal-stats {
-    grid-template-columns: 1fr;
   }
 
   .goals-create-btn,

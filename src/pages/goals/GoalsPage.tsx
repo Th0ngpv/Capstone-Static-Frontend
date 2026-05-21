@@ -62,12 +62,6 @@ const mockGoals: Goal[] = [
   },
 ];
 
-// chart data
-const projectionMonths = Array.from(
-  { length: 24 },
-  (_, index) => index,
-);
-
 // currency formatter
 function formatCurrency(value: number) {
   return new Intl.NumberFormat('vi-VN', {
@@ -228,9 +222,21 @@ export default function GoalsPage() {
   const monthlyContribution =
     selectedTarget / selectedMonthsLeft;
 
+
   // chart calculations
   const chartTarget =
     selectedTarget > 0 ? selectedTarget : 1;
+
+  const chartMax =
+    chartTarget * 1.15;
+
+  const projectionMonths = Array.from(
+    {
+      length:
+        selectedMonthsLeft + 5,
+    },
+    (_, index) => index,
+  );
 
   const chartData = projectionMonths.map(
     (month) => ({
@@ -238,10 +244,10 @@ export default function GoalsPage() {
 
       savings: Math.min(
         monthlyContribution * month,
-        chartTarget,
+        chartMax,
       ),
 
-      target: chartTarget,
+      target: chartMax,
     }),
   );
 
@@ -515,7 +521,7 @@ export default function GoalsPage() {
             </ResponsiveContainer>
 
             <div className="goal-chart__caption">
-              <span>Hiện tại</span>
+              <span>Dự đoán</span>
 
               <strong>
                 {formatProjectionDate(
