@@ -964,3 +964,25 @@
 .goals-submit-btn {
   margin-top: var(--space-2);
 }
+
+.goal-chart-tooltip {
+  background: var(--surface-primary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 12px;
+  min-width: 160px;
+  box-shadow: var(--shadow-md);
+}
+
+.goal-chart-tooltip-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.goal-chart-tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
