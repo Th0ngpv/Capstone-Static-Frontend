@@ -262,6 +262,9 @@
   align-items: center;
   gap: 1rem;
 }
+.dashboard-transaction-item__right {
+  text-align: right;
+}
 
 .dashboard-transaction-avatar {
   display: flex;
