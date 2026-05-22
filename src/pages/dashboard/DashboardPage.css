@@ -42,8 +42,8 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  padding: 0.9rem 1.25rem;
   min-width: 260px;
-  padding: 0.85rem 1rem;
   border: 1px solid var(--border);
   border-radius: var(--r-xl);
   background: var(--surface);
@@ -55,6 +55,7 @@
   width: 100%;
   border: none;
   outline: none;
+  padding: 0;
   background: transparent;
   color: var(--ink-700);
   font-size: 0.95rem;
@@ -208,19 +209,41 @@
   align-items: flex-end;
 }
 
-.dashboard-chart-bars {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  height: 100%;
+.dashboard-chart-tooltip {
+  min-width: 200px;
+  padding: 1rem;
+  border-radius: 1rem;
+  background: rgba(18, 18, 18, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-.dashboard-chart-bar {
-  flex: 1;
-  border-radius: 1rem 1rem 0 0;
-  background: linear-gradient(180deg, var(--brand-300), var(--brand-600));
+.dashboard-chart-tooltip__label {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dashboard-chart-tooltip__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.875rem;
+}
+
+.dashboard-chart-tooltip__item + .dashboard-chart-tooltip__item {
+  margin-top: 0.5rem;
+}
+
+.dashboard-chart-tooltip__item span {
+  color: var(--text-secondary);
+}
+
+.dashboard-chart-tooltip__item strong {
+  color: var(--text-primary);
 }
 
 .dashboard-transactions {

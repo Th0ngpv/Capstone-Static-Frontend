@@ -11,62 +11,248 @@ import {
 } from 'lucide-react';
 
 import './DashboardPage.css';
-import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts';
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+} from 'recharts';
 
+import type {
+  TooltipContentProps,
+} from 'recharts';
+
+import type {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
+import { useNavigate } from 'react-router-dom';
+
+const formatCurrency = (
+  value?: number | string
+) => {
+  const amount = Number(value) || 0;
+
+  return amount.toLocaleString(
+    "vi-VN",
+    {
+      style: "currency",
+      currency: "VND",
+      maximumFractionDigits: 0,
+    }
+  );
+};
+
+const formatCompactCurrency = (
+  value: number,
+) => {
+  if (value >= 1_000_000_000) {
+    return `${(
+      value / 1_000_000_000
+    ).toFixed(1)}B`;
+  }
+
+  if (value >= 1_000_000) {
+    return `${(
+      value / 1_000_000
+    ).toFixed(0)}M`;
+  }
+
+  return `${(
+    value / 1_000
+  ).toFixed(0)}K`;
+};
+
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipContentProps<
+  ValueType,
+  NameType
+>) => {
+  if (
+    active &&
+    payload &&
+    payload.length
+  ) {
+    return (
+      <div className="dashboard-chart-tooltip">
+        <p className="dashboard-chart-tooltip__label">
+          {label}
+        </p>
+
+        <div className="dashboard-chart-tooltip__item">
+          <span>Income</span>
+
+          <strong style={{ color: '#22c55e' }}>
+            {formatCurrency(
+              Number(payload?.[0]?.value ?? 0)
+            )}
+          </strong>
+        </div>
+
+        <div className="dashboard-chart-tooltip__item">
+          <span>Expense</span>
+
+          <strong style={{ color: '#ef4444' }}>
+            {formatCurrency(
+              Number(payload?.[1]?.value ?? 0)
+            )}
+          </strong>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export default function DashboardPage() {
   const [range, setRange] = useState('6m');
+  const navigate = useNavigate();
   const chartData = {
     '6m': [
-      { name: 'Jan', income: 4000, expense: 2400 },
-      { name: 'Feb', income: 3000, expense: 1398 },
-      { name: 'Mar', income: 5000, expense: 3200 },
-      { name: 'Apr', income: 2780, expense: 3908 },
-      { name: 'May', income: 1890, expense: 2800 },
-      { name: 'Jun', income: 2390, expense: 3800 },
+      {
+        name: 'Jan',
+        income: 32000000,
+        expense: 18000000,
+      },
+      {
+        name: 'Feb',
+        income: 28000000,
+        expense: 15000000,
+      },
+      {
+        name: 'Mar',
+        income: 41000000,
+        expense: 24000000,
+      },
+      {
+        name: 'Apr',
+        income: 36000000,
+        expense: 21000000,
+      },
+      {
+        name: 'May',
+        income: 47000000,
+        expense: 26000000,
+      },
+      {
+        name: 'Jun',
+        income: 39000000,
+        expense: 23000000,
+      },
     ],
 
     '12m': [
-      { name: 'Jan', income: 4000, expense: 2400 },
-      { name: 'Feb', income: 3000, expense: 1398 },
-      { name: 'Mar', income: 5000, expense: 3200 },
-      { name: 'Apr', income: 2780, expense: 3908 },
-      { name: 'May', income: 1890, expense: 2800 },
-      { name: 'Jun', income: 2390, expense: 3800 },
-      { name: 'Jul', income: 3490, expense: 2100 },
-      { name: 'Aug', income: 4200, expense: 3000 },
-      { name: 'Sep', income: 2800, expense: 2600 },
-      { name: 'Oct', income: 3900, expense: 3200 },
-      { name: 'Nov', income: 4300, expense: 3500 },
-      { name: 'Dec', income: 5000, expense: 4100 },
+      {
+        name: 'Jan',
+        income: 32000000,
+        expense: 18000000,
+      },
+      {
+        name: 'Feb',
+        income: 28000000,
+        expense: 15000000,
+      },
+      {
+        name: 'Mar',
+        income: 41000000,
+        expense: 24000000,
+      },
+      {
+        name: 'Apr',
+        income: 36000000,
+        expense: 21000000,
+      },
+      {
+        name: 'May',
+        income: 47000000,
+        expense: 26000000,
+      },
+      {
+        name: 'Jun',
+        income: 39000000,
+        expense: 23000000,
+      },
+      {
+        name: 'Jul',
+        income: 52000000,
+        expense: 29000000,
+      },
+      {
+        name: 'Aug',
+        income: 48000000,
+        expense: 27000000,
+      },
+      {
+        name: 'Sep',
+        income: 43000000,
+        expense: 25000000,
+      },
+      {
+        name: 'Oct',
+        income: 58000000,
+        expense: 32000000,
+      },
+      {
+        name: 'Nov',
+        income: 61000000,
+        expense: 34000000,
+      },
+      {
+        name: 'Dec',
+        income: 72000000,
+        expense: 41000000,
+      },
     ],
 
     year: [
-      { name: 'Q1', income: 12000, expense: 7000 },
-      { name: 'Q2', income: 14000, expense: 9000 },
-      { name: 'Q3', income: 11000, expense: 8500 },
-      { name: 'Q4', income: 16000, expense: 10000 },
+      {
+        name: '2023',
+        income: 420000000,
+        expense: 250000000,
+      },
+      {
+        name: '2024',
+        income: 510000000,
+        expense: 310000000,
+      },
+      {
+        name: '2025',
+        income: 640000000,
+        expense: 370000000,
+      },
+      {
+        name: '2026',
+        income: 720000000,
+        expense: 430000000,
+      },
     ],
   };
   const summaryData = useMemo(
     () => [
       {
         title: 'Total Balance',
-        amount: '$24,890.00',
+        amount: '₫635M',
         change: '+12.4%',
         positive: true,
         icon: <Wallet size={20} />,
       },
       {
         title: 'Monthly Savings',
-        amount: '$4,230.00',
+        amount: '₫108M',
         change: '+8.2%',
         positive: true,
         icon: <PiggyBank size={20} />,
       },
       {
         title: 'Investments',
-        amount: '$12,450.00',
+        amount: '₫317M',
         change: '-2.1%',
         positive: false,
         icon: <TrendingUp size={20} />,
@@ -86,28 +272,28 @@ export default function DashboardPage() {
     {
       title: 'Spotify Premium',
       category: 'Entertainment',
-      amount: '-$12.99',
+      amount: '-₫329K',
       date: 'Today',
       expense: true,
     },
     {
       title: 'Freelance Payment',
       category: 'Income',
-      amount: '+$1,240.00',
+      amount: '+₫31.5M',
       date: 'Yesterday',
       expense: false,
     },
     {
       title: 'Grab Food',
       category: 'Food & Drink',
-      amount: '-$24.50',
+      amount: '-₫620K',
       date: 'Yesterday',
       expense: true,
     },
     {
       title: 'Vanguard ETF',
       category: 'Investment',
-      amount: '+$300.00',
+      amount: '+₫7.6M',
       date: '2 days ago',
       expense: false,
     },
@@ -116,20 +302,20 @@ export default function DashboardPage() {
   const goals = [
     {
       title: 'Emergency Fund',
-      current: '$8,000',
-      target: '$10,000',
+      current: '₫205M',
+      target: '₫256M',
       progress: 80,
     },
     {
       title: 'Japan Trip',
-      current: '$3,500',
-      target: '$5,000',
+      current: '₫89M',
+      target: '₫128M',
       progress: 70,
     },
     {
       title: 'New Laptop',
-      current: '$1,100',
-      target: '$2,000',
+      current: '₫28M',
+      target: '₫51M',
       progress: 55,
     },
   ];
@@ -232,10 +418,47 @@ export default function DashboardPage() {
               maxHeight={280}
               aspect={1.618}
             >
-              <BarChart data={range === '6m' ? chartData['6m'] : range === '12m' ? chartData['12m'] : chartData['year']}>
-                <XAxis dataKey="name" />
+              <BarChart
+                data={
+                  range === '6m'
+                    ? chartData['6m']
+                    : range === '12m'
+                      ? chartData['12m']
+                      : chartData['year']
+                }
+              >
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  vertical={false}
+                  opacity={0.1}
+                />
 
-                <Tooltip />
+                <XAxis
+                  dataKey="name"
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fontSize: 12 }}
+                />
+
+                <YAxis
+                  tickLine={false}
+                  axisLine={false}
+                  tick={{ fontSize: 12 }}
+                  tickFormatter={(
+                    value,
+                  ) =>
+                    formatCompactCurrency(value)
+                  }
+                />
+
+                <Tooltip
+                  cursor={{
+                    fill: 'rgba(255,255,255,0.03)',
+                  }}
+                  offset={60}
+                  allowEscapeViewBox={{ x: false, y: true }}
+                  content={CustomTooltip}
+                />
 
                 <Bar
                   dataKey="income"
@@ -259,7 +482,12 @@ export default function DashboardPage() {
               <p>Your latest account activity</p>
             </div>
 
-            <button className="dashboard-text-btn">View All</button>
+            <button
+              className="dashboard-text-btn"
+              onClick={() => navigate('/cashflow')}
+            >
+              View All
+            </button>
           </div>
 
           <div className="dashboard-transactions">
