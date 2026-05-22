@@ -6,7 +6,6 @@ import {
   PiggyBank,
   TrendingUp,
   Target,
-  Bell,
   Search,
   Plus,
 } from 'lucide-react';
@@ -149,12 +148,8 @@ export default function DashboardPage() {
         <div className="dashboard-header__actions">
           <div className="dashboard-search">
             <Search size={18} />
-            <input type="text" placeholder="Search anything..." />
+            <input type="text" placeholder="Search ..." />
           </div>
-
-          <button className="dashboard-icon-btn">
-            <Bell size={18} />
-          </button>
 
           <button className="dashboard-primary-btn">
             <Plus size={18} />

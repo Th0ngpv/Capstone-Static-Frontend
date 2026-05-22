@@ -64,31 +64,6 @@
   color: var(--ink-400);
 }
 
-.dashboard-icon-btn,
-.dashboard-primary-btn,
-.dashboard-text-btn {
-  border: none;
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.dashboard-icon-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: var(--r-xl);
-  background: var(--surface);
-  color: var(--ink-700);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-
-.dashboard-icon-btn:hover {
-  background: var(--ink-100);
-}
-
 .dashboard-primary-btn {
   display: flex;
   align-items: center;
