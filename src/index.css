@@ -85,9 +85,9 @@ body {
   --text-xl: 1.25rem;
 
   /* FONTS */
-  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
 
-  --font-display: "Playfair Display", Georgia, serif;
+  --font-display: 'Playfair Display', Georgia, serif;
 
   --font-mono: ui-monospace, SFMono-Regular, monospace;
 
@@ -168,4 +168,28 @@ input:focus {
   max-width: 72rem;
   margin: 0 auto;
   padding: 0 var(--space-4);
+}
+
+/* MINIMAL SCROLLBAR */
+
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: rgba(100, 116, 139, 0.45);
+  border-radius: 999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.7);
+}
+
+* {
+  scrollbar-width: thin;
 }

@@ -142,7 +142,12 @@ export default function MarketplacePage() {
           ))}
         </div>
       </section>
-
+      <div className="marketplace-section__header">
+        <div>
+          <h2>Market Insights</h2>
+          <p>Details about the latest market trends and opportunities</p>
+        </div>
+      </div>
       {/* MARKET INSIGHTS */}
       <section className="marketplace-bottom-grid">
         <article className="marketplace-panel">

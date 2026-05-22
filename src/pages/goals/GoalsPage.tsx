@@ -1,6 +1,15 @@
 import { useMemo, useState } from 'react';
 
 import './GoalsPage.css';
+import { Area, ResponsiveContainer, ReferenceLine, AreaChart, Tooltip, YAxis, XAxis } from 'recharts';
+import type {
+  TooltipContentProps,
+} from 'recharts';
+
+import type {
+  NameType,
+  ValueType,
+} from 'recharts/types/component/DefaultTooltipContent';
 
 // types declaration
 type GoalType =
@@ -52,12 +61,6 @@ const mockGoals: Goal[] = [
     deadline: '2027-03-01',
   },
 ];
-
-// chart data
-const projectionMonths = Array.from(
-  { length: 24 },
-  (_, index) => index,
-);
 
 // currency formatter
 function formatCurrency(value: number) {
@@ -111,11 +114,73 @@ function formatProjectionDate(monthsFromNow: number) {
     date.getMonth() + Math.ceil(monthsFromNow),
   );
 
-  return new Intl.DateTimeFormat('vi-VN', {
-    year: 'numeric',
-    month: 'short',
+  return new Intl.DateTimeFormat('en-GB', {
+    year: '2-digit',
+    month: '2-digit',
   }).format(date);
 }
+
+// Table Legend Helper
+const formatGoalCurrency = (
+  value: number,
+) => {
+  if (value >= 1_000_000_000) {
+    return `${(
+      value / 1_000_000_000
+    ).toFixed(1)}B`;
+  }
+
+  if (value >= 1_000_000) {
+    return `${(
+      value / 1_000_000
+    ).toFixed(0)}M`;
+  }
+
+  if (value >= 1_000) {
+    return `${(
+      value / 1_000
+    ).toFixed(0)}K`;
+  }
+
+  return value.toString();
+};
+
+//Custom tooltip for chart
+const GoalChartTooltip = ({
+  active,
+  payload,
+  label,
+}: TooltipContentProps<
+  ValueType,
+  NameType
+>) => {
+  if (
+    active &&
+    payload &&
+    payload.length
+  ) {
+    return (
+      <div className="goal-chart-tooltip">
+        <p className="goal-chart-tooltip-label">
+          {label}
+        </p>
+
+        <div className="goal-chart-tooltip-row">
+          <span>Projected</span>
+
+          <strong>
+            {formatGoalCurrency(
+              Number(payload[0].value),
+            )}{' '}
+            VND
+          </strong>
+        </div>
+      </div>
+    );
+  }
+
+  return null;
+};
 
 export default function GoalsPage() {
   // goals state
@@ -157,55 +222,34 @@ export default function GoalsPage() {
   const monthlyContribution =
     selectedTarget / selectedMonthsLeft;
 
+
   // chart calculations
   const chartTarget =
     selectedTarget > 0 ? selectedTarget : 1;
 
-  const projectedValues = projectionMonths.map(
-    (month) =>
-      Math.min(
-        monthlyContribution * month,
-        chartTarget,
-      ),
-  );
+  const chartMax =
+    chartTarget * 1.15;
 
-  const chartMax = Math.max(
-    chartTarget,
-    ...projectedValues,
-    1,
-  );
-
-  // chart points
-  const chartPoints = projectedValues.map(
-    (value, index) => {
-      const x =
-        34 +
-        (index /
-          (projectionMonths.length - 1)) *
-        498;
-
-      const y =
-        176 - (value / chartMax) * 130;
-
-      return { x, y };
+  const projectionMonths = Array.from(
+    {
+      length:
+        selectedMonthsLeft + 5,
     },
+    (_, index) => index,
   );
 
-  // chart line
-  const chartLine = chartPoints
-    .map(
-      (point, index) =>
-        `${index === 0 ? 'M' : 'L'} ${point.x
-        } ${point.y}`,
-    )
-    .join(' ');
+  const chartData = projectionMonths.map(
+    (month) => ({
+      month: formatProjectionDate(month),
 
-  // chart area
-  const chartArea = `${chartLine} L 532 176 L 34 176 Z`;
+      savings: Math.min(
+        monthlyContribution * month,
+        chartMax,
+      ),
 
-  // target line position
-  const targetY =
-    176 - (chartTarget / chartMax) * 130;
+      target: chartMax,
+    }),
+  );
 
   return (
     <section className="goals-main">
@@ -302,7 +346,10 @@ export default function GoalsPage() {
       )}
 
       {/* goals grid */}
-      <section className="goals-grid">
+      <section className="goals-grid"
+        onWheel={(event) => {
+          event.currentTarget.scrollLeft += event.deltaY;
+        }}>
         {goals.map((goal) => {
           const monthsLeft = getMonthsLeft(
             goal.deadline,
@@ -441,66 +488,40 @@ export default function GoalsPage() {
 
           {/* chart */}
           <div className="goal-chart">
-            <svg
-              className="goal-chart__svg"
-              viewBox="0 0 560 220"
-              fill="none"
-            >
-              <defs>
-                <linearGradient
-                  id="goalProjectionFill"
-                  x1="0"
-                  y1="0"
-                  x2="0"
-                  y2="1"
-                >
-                  <stop
-                    offset="0%"
-                    stopColor="#22c55e"
-                    stopOpacity="0.35"
-                  />
+            <ResponsiveContainer width="100%" height={260}>
+              <AreaChart data={chartData}>
 
-                  <stop
-                    offset="100%"
-                    stopColor="#22c55e"
-                    stopOpacity="0"
-                  />
-                </linearGradient>
-              </defs>
 
-              <path
-                className="goal-chart__area"
-                d={chartArea}
-              />
+                <XAxis dataKey="month"
+                  tick={{
+                    fontSize: 12,
+                  }} />
 
-              <path
-                className="goal-chart__line"
-                d={chartLine}
-              />
+                <YAxis tickFormatter={formatGoalCurrency}
+                  tick={{
+                    fontSize: 12,
+                  }} />
 
-              <line
-                className="goal-chart__target-line"
-                x1="34"
-                x2="532"
-                y1={targetY}
-                y2={targetY}
-              />
+                <Tooltip content={GoalChartTooltip} />
 
-              {chartPoints.map(
-                (point, index) => (
-                  <circle
-                    key={index}
-                    cx={point.x}
-                    cy={point.y}
-                    r="4"
-                    className="goal-chart__endpoint"
-                  />
-                ),
-              )}
-            </svg>
+                <ReferenceLine
+                  y={chartTarget}
+                  stroke="#ef4444"
+                  strokeDasharray="5 5"
+                />
+
+                <Area
+                  type="monotone"
+                  dataKey="savings"
+                  stroke="#22c55e"
+                  fill="#22c55e"
+                  fillOpacity={0.2}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
 
             <div className="goal-chart__caption">
-              <span>Hiện tại</span>
+              <span>Dự đoán</span>
 
               <strong>
                 {formatProjectionDate(

@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Sidebar from './Sidebar';
 
 import './Layout.css';
+import LanguageSwitch from './LanguageSwitch';
 
 const pageTitles: Record<string, string> = {
   '/dashboard': 'Tổng quan',
@@ -36,15 +37,19 @@ export default function Layout({
             {pageTitles[location.pathname] ??
               'Dashboard'}
           </h1>
+          <div className="layout-header-right">
+            <LanguageSwitch />
 
-          <button
-            className="layout-avatar"
-            onClick={() => navigate('/user')}
-          >
-            {user.userName
-              .slice(0, 2)
-              .toUpperCase()}
-          </button>
+            <button
+              className="layout-avatar"
+              onClick={() => navigate('/user')}
+            >
+              {user.userName
+                .slice(0, 2)
+                .toUpperCase()}
+            </button>
+          </div>
+
         </header>
 
         <main className="layout-content">

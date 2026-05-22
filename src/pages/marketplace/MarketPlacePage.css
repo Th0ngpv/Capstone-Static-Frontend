@@ -3,7 +3,7 @@
   flex-direction: column;
   gap: 2rem;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 1.25rem;
   background: var(--bg);
   color: var(--ink-700);
 }
@@ -11,14 +11,10 @@
 .marketplace-hero {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 2rem;
+  gap: 1rem;
+  padding: 1.25rem;
   border-radius: var(--r-xl);
-  background: linear-gradient(
-    135deg,
-    var(--brand-500),
-    var(--brand-700)
-  );
+  background: linear-gradient(135deg, var(--brand-500), var(--brand-700));
   color: white;
 }
 
@@ -36,8 +32,8 @@
 
 .marketplace-title {
   max-width: 720px;
-  margin-top: 1rem;
-  font-size: 3rem;
+  margin-top: 0.5rem;
+  font-size: 2rem;
   line-height: 1.1;
 }
 
@@ -61,7 +57,7 @@
   flex: 1;
   gap: 0.75rem;
   min-width: 280px;
-  padding: 1rem 1.2rem;
+  padding: 0.5rem 0.75rem;
   border-radius: var(--r-xl);
   background: rgba(255, 255, 255, 0.12);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -97,7 +93,7 @@
 .marketplace-section {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .marketplace-section__header {
@@ -118,18 +114,23 @@
 
 .marketplace-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
+
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+
+  gap: 0.9rem;
 }
 
 .marketplace-card {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  border-radius: var(--r-xl);
+
+  gap: 0.9rem;
+  padding: 1rem;
+
+  border-radius: var(--r-lg);
   background: var(--surface);
   border: 1px solid var(--border);
+
   box-shadow: var(--shadow-sm);
   transition: 0.2s ease;
 }
@@ -140,8 +141,12 @@
 
 .marketplace-card__top {
   display: flex;
+
   align-items: center;
+
   justify-content: space-between;
+
+  gap: 0.75rem;
 }
 
 .marketplace-card__tag {
@@ -178,14 +183,18 @@
 
 .marketplace-card__rate {
   display: inline-block;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
   color: var(--pos);
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: 700;
 }
 
 .marketplace-card p {
+  font-size: 0.84rem;
+
+  line-height: 1.45;
+
   color: var(--ink-500);
 }
 
@@ -346,11 +355,42 @@
 
 @media (max-width: 768px) {
   .marketplace-page {
-    padding: 1.25rem;
+    gap: 2rem;
+    padding: 1rem;
   }
 
   .marketplace-hero {
-    padding: 1.5rem;
+    gap: 0.85rem;
+    padding: 1rem;
+  }
+
+  .marketplace-title {
+    font-size: 1.75rem;
+    line-height: 1.05;
+  }
+
+  .marketplace-subtitle {
+    font-size: 0.92rem;
+  }
+
+  .marketplace-grid {
+    display: flex;
+
+    gap: 0.75rem;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x proximity;
+  }
+
+  .marketplace-card {
+    flex: 0 0 260px;
+
+    padding: 0.9rem;
+
+    gap: 0.75rem;
+
+    scroll-snap-align: start;
   }
 
   .marketplace-search-wrapper {
@@ -358,7 +398,8 @@
     align-items: stretch;
   }
 
+  .marketplace-search,
   .marketplace-filter-btn {
-    justify-content: center;
+    padding: 0.8rem 0.9rem;
   }
 }
