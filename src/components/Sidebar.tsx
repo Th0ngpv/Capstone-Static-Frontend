@@ -9,42 +9,49 @@ import {
   Sparkles,
 } from 'lucide-react';
 
+import { useLanguage } from '../hooks/useLanguage';
+
+import { translations } from '../locales/translations';
+
 import './Sidebar.css';
 
 const navItems = [
   {
-    label: 'Tổng quan',
+    key: 'overview',
     href: '/dashboard',
     icon: LayoutDashboard,
   },
   {
-    label: 'Danh mục',
+    key: 'portfolio',
     href: '/portfolio',
     icon: BriefcaseBusiness,
   },
   {
-    label: 'Mục tiêu',
+    key: 'goals',
     href: '/goals',
     icon: Target,
   },
   {
-    label: 'Dòng tiền',
+    key: 'cashFlow',
     href: '/cashflow',
     icon: Wallet,
   },
   {
-    label: 'Marketplace',
+    key: 'marketplace',
     href: '/marketplace',
     icon: Store,
   },
   {
-    label: 'AI Coach',
+    key: 'aiCoach',
     href: '/coach',
     icon: Sparkles,
   },
 ] as const;
 
 export default function Sidebar() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
   return (
     <>
       {/* DESKTOP SIDEBAR */}
@@ -59,7 +66,7 @@ export default function Sidebar() {
             <strong>WealthOS</strong>
 
             <span>
-              AI Wealth Platform
+              {t.appSubtitle}
             </span>
           </div>
         </div>
@@ -77,7 +84,11 @@ export default function Sidebar() {
               <item.icon size={18} />
 
               <span>
-                {item.label}
+                {
+                  t[
+                  item.key as keyof typeof t
+                  ]
+                }
               </span>
             </NavLink>
           ))}
@@ -97,7 +108,11 @@ export default function Sidebar() {
             <item.icon size={22} />
 
             <span>
-              {item.label}
+              {
+                t[
+                item.key as keyof typeof t
+                ]
+              }
             </span>
           </NavLink>
         ))}

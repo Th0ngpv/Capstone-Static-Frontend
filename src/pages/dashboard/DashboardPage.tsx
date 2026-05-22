@@ -31,6 +31,10 @@ import type {
 } from 'recharts/types/component/DefaultTooltipContent';
 import { useNavigate } from 'react-router-dom';
 
+import { useLanguage } from '../../hooks/useLanguage';
+
+import { translations } from '../../locales/translations';
+
 const formatCurrency = (
   value?: number | string
 ) => {
@@ -111,9 +115,17 @@ const CustomTooltip = ({
   return null;
 };
 
+
+
 export default function DashboardPage() {
   const [range, setRange] = useState('6m');
   const navigate = useNavigate();
+
+  const { language } = useLanguage();
+
+  const t = translations[language];
+
+  // Mock data for charts, transactions, and goals
   const chartData = {
     '6m': [
       {
@@ -234,86 +246,87 @@ export default function DashboardPage() {
       },
     ],
   };
+
   const summaryData = useMemo(
     () => [
       {
-        title: 'Total Balance',
+        title: t.totalBalance,
         amount: '₫635M',
         change: '+12.4%',
         positive: true,
         icon: <Wallet size={20} />,
       },
       {
-        title: 'Monthly Savings',
+        title: t.monthlySavings,
         amount: '₫108M',
         change: '+8.2%',
         positive: true,
         icon: <PiggyBank size={20} />,
       },
       {
-        title: 'Investments',
+        title: t.investments,
         amount: '₫317M',
         change: '-2.1%',
         positive: false,
         icon: <TrendingUp size={20} />,
       },
       {
-        title: 'Goals Progress',
+        title: t.goalsProgress,
         amount: '78%',
-        change: '+6 goals',
+        change: '+6.0 %',
         positive: true,
         icon: <Target size={20} />,
       },
     ],
-    []
+    [t]
   );
 
   const recentTransactions = [
     {
       title: 'Spotify Premium',
-      category: 'Entertainment',
+      category: t.entertainment,
       amount: '-₫329K',
-      date: 'Today',
+      date: t.today,
       expense: true,
     },
     {
       title: 'Freelance Payment',
-      category: 'Income',
+      category: t.income,
       amount: '+₫31.5M',
-      date: 'Yesterday',
+      date: t.yesterday,
       expense: false,
     },
     {
       title: 'Grab Food',
-      category: 'Food & Drink',
+      category: t.foodDrink,
       amount: '-₫620K',
-      date: 'Yesterday',
+      date: t.yesterday,
       expense: true,
     },
     {
       title: 'Vanguard ETF',
-      category: 'Investment',
+      category: t.investment,
       amount: '+₫7.6M',
-      date: '2 days ago',
+      date: t.twoDaysAgo,
       expense: false,
     },
   ];
 
   const goals = [
     {
-      title: 'Emergency Fund',
+      title: t.emergencyFund,
       current: '₫205M',
       target: '₫256M',
       progress: 80,
     },
     {
-      title: 'Japan Trip',
+      title: t.japanTrip,
       current: '₫89M',
       target: '₫128M',
       progress: 70,
     },
     {
-      title: 'New Laptop',
+      title: t.newLaptop,
       current: '₫28M',
       target: '₫51M',
       progress: 55,
@@ -325,21 +338,21 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="dashboard-header">
         <div>
-          <h1 className="dashboard-title">Welcome back, <span>Bill</span></h1>
+          <h1 className="dashboard-title">{t.welcomeBack},{' '} <span>Bill</span></h1>
           <p className="dashboard-subtitle">
-            Here’s a quick overview of your financial activity.
+            {t.dashboardSubtitle}
           </p>
         </div>
 
         <div className="dashboard-header__actions">
           <div className="dashboard-search">
             <Search size={18} />
-            <input type="text" placeholder="Search ..." />
+            <input type="text" placeholder={t.searchPlaceholder} />
           </div>
 
           <button className="dashboard-primary-btn">
             <Plus size={18} />
-            Add Transaction
+            {t.addTransaction}
           </button>
         </div>
       </header>
@@ -382,17 +395,17 @@ export default function DashboardPage() {
         <article className="dashboard-card dashboard-chart-card">
           <div className="dashboard-card__header">
             <div>
-              <h2>Cash Flow Overview</h2>
+              <h2>{t.cashFlowOverview}</h2>
 
               <p>
                 {range === '6m' &&
-                  'Income vs expenses in the last 6 months'}
+                  t.last6Months}
 
                 {range === '12m' &&
-                  'Income vs expenses in the last 12 months'}
+                  t.last12Months}
 
                 {range === 'year' &&
-                  'Income vs expenses this year'}
+                  t.incomeVsExpenserecentYears}
               </p>
             </div>
 
@@ -402,13 +415,17 @@ export default function DashboardPage() {
                 setRange(event.target.value)
               }
             >
-              <option value="6m">Last 6 Months</option>
-
-              <option value="12m">
-                Last 12 Months
+              <option value="6m">
+                {t.last6Months}
               </option>
 
-              <option value="year">This Year</option>
+              <option value="12m">
+                {t.last12Months}
+              </option>
+
+              <option value="year">
+                {t.recentYears}
+              </option>
             </select>
           </div>
 
@@ -478,15 +495,15 @@ export default function DashboardPage() {
         <article className="dashboard-card">
           <div className="dashboard-card__header">
             <div>
-              <h2>Recent Transactions</h2>
-              <p>Your latest account activity</p>
+              <h2>{t.recentTransactions}</h2>
+              <p>{t.latestAccountActivity}</p>
             </div>
 
             <button
               className="dashboard-text-btn"
               onClick={() => navigate('/cashflow')}
             >
-              View All
+              {t.viewAll}
             </button>
           </div>
 
@@ -528,11 +545,11 @@ export default function DashboardPage() {
         <article className="dashboard-card dashboard-goals-card">
           <div className="dashboard-card__header">
             <div>
-              <h2>Financial Goals</h2>
-              <p>Track your savings targets</p>
+              <h2>{t.financialGoals}</h2>
+              <p>{t.trackSavingsTargets}</p>
             </div>
 
-            <button className="dashboard-text-btn">Manage</button>
+            <button className="dashboard-text-btn">{t.manage}</button>
           </div>
 
           <div className="dashboard-goals-list">
@@ -564,8 +581,8 @@ export default function DashboardPage() {
         <article className="dashboard-card dashboard-insights-card">
           <div className="dashboard-card__header">
             <div>
-              <h2>Smart Insights</h2>
-              <p>AI generated financial suggestions</p>
+              <h2>{t.smartInsights}</h2>
+              <p>{t.aiGeneratedSuggestions}</p>
             </div>
           </div>
 
@@ -573,23 +590,21 @@ export default function DashboardPage() {
             <div className="dashboard-insight-item">
               <span>💡</span>
               <p>
-                Your food spending increased by 18% this month compared to
-                last month.
+                {t.foodSpendingInsight}
               </p>
             </div>
 
             <div className="dashboard-insight-item">
               <span>📈</span>
               <p>
-                You are currently ahead of your emergency fund saving target.
+                {t.emergencyFundInsight}
               </p>
             </div>
 
             <div className="dashboard-insight-item">
               <span>🎯</span>
               <p>
-                At your current pace, you can complete your Japan Trip goal in
-                3 months.
+                {t.japanTripInsight}
               </p>
             </div>
           </div>

@@ -5,15 +5,23 @@ import Sidebar from './Sidebar';
 import './Layout.css';
 import LanguageSwitch from './LanguageSwitch';
 
-const pageTitles: Record<string, string> = {
-  '/dashboard': 'Tổng quan',
-  '/portfolio': 'Danh mục đầu tư',
-  '/goals': 'Mục tiêu tài chính',
-  '/cashflow': 'Dòng tiền',
-  '/marketplace': 'Marketplace',
-  '/coach': 'AI Coach',
-  '/user': 'Tài khoản',
+import { useLanguage } from '../hooks/useLanguage';
+
+import { translations } from '../locales/translations';
+
+const pageTitleKeys: Record<
+  string,
+  keyof typeof translations.en
+> = {
+  '/dashboard': 'overview',
+  '/portfolio': 'portfolio',
+  '/goals': 'goals',
+  '/cashflow': 'cashFlow',
+  '/marketplace': 'marketplace',
+  '/coach': 'aiCoach',
 };
+
+
 
 export default function Layout({
   children,
@@ -22,6 +30,10 @@ export default function Layout({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { language } = useLanguage();
+
+  const t = translations[language];
 
   const user = {
     userName: 'Bill Pham',
@@ -34,8 +46,13 @@ export default function Layout({
       <div className="layout-body">
         <header className="layout-header">
           <h1>
-            {pageTitles[location.pathname] ??
-              'Dashboard'}
+            {
+              t[
+              pageTitleKeys[
+              location.pathname
+              ]
+              ] ?? t.overview
+            }
           </h1>
           <div className="layout-header-right">
             <LanguageSwitch />
