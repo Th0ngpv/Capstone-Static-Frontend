@@ -140,7 +140,7 @@ export default function DashboardPage() {
       {/* Header */}
       <header className="dashboard-header">
         <div>
-          <h1 className="dashboard-title">Welcome back, Bill 👋</h1>
+          <h1 className="dashboard-title">Welcome back, <span>Bill</span></h1>
           <p className="dashboard-subtitle">
             Here’s a quick overview of your financial activity.
           </p>
