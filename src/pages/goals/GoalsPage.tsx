@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 
 import './GoalsPage.css';
 import { Area, ResponsiveContainer, ReferenceLine, AreaChart, Tooltip, YAxis, XAxis } from 'recharts';
@@ -184,21 +184,79 @@ const GoalChartTooltip = ({
 
 export default function GoalsPage() {
   // goals state
-  const [goals] = useState<Goal[]>(mockGoals);
+  const [goals, setGoals] = useState<Goal[]>(() => {
+    const savedGoals = localStorage.getItem('capstone_goals');
+    if (savedGoals) {
+      try {
+        return JSON.parse(savedGoals);
+      } catch (e) {
+        console.error('Failed to parse goals from local storage', e);
+      }
+    }
+    return mockGoals;
+  });
 
   // selected goal state
   const [selectedGoalId, setSelectedGoalId] =
     useState<string>('1');
 
+  // sync goals to local storage
+  useEffect(() => {
+    localStorage.setItem('capstone_goals', JSON.stringify(goals));
+  }, [goals]);
+
   // form toggle state
   const [isFormOpen, setIsFormOpen] =
     useState(false);
+
+  // new goal form state
+  const [formData, setFormData] = useState<Partial<Goal>>({
+    goalTitle: '',
+    goalType: 'khác',
+    goalPriority: 'P3',
+    note: '',
+    lumpSumAmountByDeadline: 0,
+    deadline: '',
+  });
+
+  // handle form submission (Create & Update)
+  const handleSubmitGoal = () => {
+    console.log('[handleSubmitGoal] triggered with formData:', formData);
+    if (formData.id) {
+      console.log('[handleSubmitGoal] updating existing goal ID:', formData.id);
+      setGoals((prev) =>
+        prev.map((g) => (g.id === formData.id ? ({ ...g, ...formData } as Goal) : g))
+      );
+    } else {
+      const newGoal: Goal = {
+        ...(formData as Goal),
+        id: Date.now().toString(), // Generate a simple unique ID
+      };
+      console.log('[handleSubmitGoal] creating new goal:', newGoal);
+      setGoals((prev) => [...prev, newGoal]);
+      setSelectedGoalId(newGoal.id); // Auto-select the newly created goal
+    }
+    setIsFormOpen(false);
+  };
+
+  // handle editing a goal (Populate form & open modal)
+  const handleEditGoal = (goal: Goal) => {
+    console.log('[handleEditGoal] populating form with goal:', goal);
+    setFormData(goal);
+    setIsFormOpen(true);
+  };
+
+  // handle deleting a goal
+  const handleDeleteGoal = (id: string) => {
+    console.log('[handleDeleteGoal] deleting goal ID:', id);
+    setGoals((prev) => prev.filter((g) => g.id !== id));
+  };
 
   // selected goal
   const selectedGoal =
     goals.find(
       (goal) => goal.id === selectedGoalId,
-    ) ?? goals[0];
+    ) ?? goals[0] ?? { id: 'empty', goalTitle: 'Chưa có mục tiêu', goalPriority: 'P3', goalType: 'khác', note: 'Hãy tạo mục tiêu mới.', lumpSumAmountByDeadline: 0, deadline: new Date().toISOString().split('T')[0] };
 
   // total goals amount
   const totalTarget = useMemo(() => {
@@ -264,9 +322,18 @@ export default function GoalsPage() {
         <button
           className="goals-create-btn"
           type="button"
-          onClick={() =>
-            setIsFormOpen(!isFormOpen)
-          }
+          onClick={() => {
+            console.log('[Open Create Modal] Resetting form data');
+            setFormData({
+              goalTitle: '',
+              goalType: 'khác',
+              goalPriority: 'P3',
+              note: '',
+              lumpSumAmountByDeadline: 0,
+              deadline: '',
+            });
+            setIsFormOpen(true);
+          }}
         >
           + Tạo mục tiêu
         </button>
@@ -299,44 +366,51 @@ export default function GoalsPage() {
               </button>
             </div>
 
-            <form className="goals-form">
+            {/* TODO: Bind these inputs to formData & onChange */}
+            <form className="goals-form" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="text"
-                value="Mua căn hộ"
-                readOnly
+                placeholder="Mua căn hộ"
+                value={formData.goalTitle}
+                onChange={(e) => setFormData({...formData, goalTitle: e.target.value})}
               />
 
               <select
-                value="mua nhà"
-                disabled
+                value={formData.goalType}
+                onChange={(e) => setFormData({...formData, goalType: e.target.value as GoalType})}
               >
                 <option>Mua nhà</option>
               </select>
 
-              <select value="P1" disabled>
+              <select 
+                value={formData.goalPriority}
+                onChange={(e) => setFormData({...formData, goalPriority: e.target.value as Goal['goalPriority']})}
+              >
                 <option>P1 - Quan trọng</option>
               </select>
 
               <textarea
-                value="Tiết kiệm để mua căn hộ đầu tiên"
-                readOnly
+                placeholder="Tiết kiệm để mua căn hộ đầu tiên"
+                value={formData.note}
+                onChange={(e) => setFormData({...formData, note: e.target.value})}
               />
 
               <input
                 type="number"
-                value="2500000000"
-                readOnly
+                value={formData.lumpSumAmountByDeadline}
+                onChange={(e) => setFormData({...formData, lumpSumAmountByDeadline: Number(e.target.value)})}
               />
 
               <input
                 type="date"
-                value="2028-06-01"
-                readOnly
+                value={formData.deadline}
+                onChange={(e) => setFormData({...formData, deadline: e.target.value})}
               />
 
               <button
                 className="goals-submit-btn"
                 type="button"
+                onClick={handleSubmitGoal}
               >
                 Thêm mục tiêu
               </button>
@@ -362,9 +436,10 @@ export default function GoalsPage() {
                 ? 'is-selected'
                 : ''
                 }`}
-              onClick={() =>
+              onClick={() => {
+                console.log('[Select Goal] Selected goal ID:', goal.id);
                 setSelectedGoalId(goal.id)
-              }
+              }}
             >
               <div className="goal-card__top">
                 <div className="goal-card__icon">
@@ -413,11 +488,11 @@ export default function GoalsPage() {
                 <span>Đúng tiến độ</span>
 
                 <div>
-                  <button type="button">
+                  <button type="button" onClick={(e) => { e.stopPropagation(); handleEditGoal(goal); }}>
                     Sửa
                   </button>
 
-                  <button type="button">
+                  <button type="button" onClick={(e) => { e.stopPropagation(); handleDeleteGoal(goal.id); }}>
                     Xóa
                   </button>
                 </div>
