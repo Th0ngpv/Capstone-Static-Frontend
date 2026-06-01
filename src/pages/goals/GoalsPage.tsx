@@ -1,4 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
+import { useLanguage } from '../../hooks/useLanguage';
+import { translations } from '../../locales/translations';
 
 import './GoalsPage.css';
 import { Area, ResponsiveContainer, ReferenceLine, AreaChart, Tooltip, YAxis, XAxis } from 'recharts';
@@ -150,10 +152,11 @@ const GoalChartTooltip = ({
   active,
   payload,
   label,
+  projectionLabel = 'Projected',
 }: TooltipContentProps<
   ValueType,
   NameType
->) => {
+> & { projectionLabel?: string }) => {
   if (
     active &&
     payload &&
@@ -166,7 +169,7 @@ const GoalChartTooltip = ({
         </p>
 
         <div className="goal-chart-tooltip-row">
-          <span>Projected</span>
+          <span>{projectionLabel}</span>
 
           <strong>
             {formatGoalCurrency(
@@ -183,6 +186,19 @@ const GoalChartTooltip = ({
 };
 
 export default function GoalsPage() {
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  const typeMap: Record<GoalType, string> = {
+    'khác': t.typeOther,
+    'mua nhà': t.typeHouse,
+    'mua xe': t.typeCar,
+    'quỹ hưu trí': t.typeRetirement,
+    'đám cưới': t.typeWedding,
+    'sửa nhà': t.typeReno,
+    'giáo dục': t.typeEducation,
+  };
+
   // goals state
   const [goals, setGoals] = useState<Goal[]>(() => {
     const savedGoals = localStorage.getItem('capstone_goals');
@@ -256,7 +272,7 @@ export default function GoalsPage() {
   const selectedGoal =
     goals.find(
       (goal) => goal.id === selectedGoalId,
-    ) ?? goals[0] ?? { id: 'empty', goalTitle: 'Chưa có mục tiêu', goalPriority: 'P3', goalType: 'khác', note: 'Hãy tạo mục tiêu mới.', lumpSumAmountByDeadline: 0, deadline: new Date().toISOString().split('T')[0] };
+    ) ?? goals[0] ?? { id: 'empty', goalTitle: t.noGoals, goalPriority: 'P3', goalType: 'khác', note: t.createNewGoal, lumpSumAmountByDeadline: 0, deadline: new Date().toISOString().split('T')[0] };
 
   // total goals amount
   const totalTarget = useMemo(() => {
@@ -314,9 +330,9 @@ export default function GoalsPage() {
       {/* header */}
       <section className="goals-header">
         <div>
-          <span>Lập kế hoạch tài chính</span>
+          <span>{t.financialPlanning}</span>
 
-          <h1>Tổng quan mục tiêu</h1>
+          <h1>{t.goalsOverview}</h1>
         </div>
 
         <button
@@ -335,7 +351,7 @@ export default function GoalsPage() {
             setIsFormOpen(true);
           }}
         >
-          + Tạo mục tiêu
+          {t.createGoalBtn}
         </button>
       </section>
 
@@ -354,7 +370,7 @@ export default function GoalsPage() {
             }
           >
             <div className="goals-modal-header">
-              <h2>Tạo mục tiêu</h2>
+              <h2>{t.createGoalTitle}</h2>
 
               <button
                 type="button"
@@ -370,7 +386,7 @@ export default function GoalsPage() {
             <form className="goals-form" onSubmit={(e) => e.preventDefault()}>
               <input
                 type="text"
-                placeholder="Mua căn hộ"
+                placeholder={t.placeholderHouse}
                 value={formData.goalTitle}
                 onChange={(e) => setFormData({...formData, goalTitle: e.target.value})}
               />
@@ -379,18 +395,28 @@ export default function GoalsPage() {
                 value={formData.goalType}
                 onChange={(e) => setFormData({...formData, goalType: e.target.value as GoalType})}
               >
-                <option>Mua nhà</option>
+                <option value="khác">{t.typeOther}</option>
+                <option value="mua nhà">{t.typeHouse}</option>
+                <option value="mua xe">{t.typeCar}</option>
+                <option value="quỹ hưu trí">{t.typeRetirement}</option>
+                <option value="đám cưới">{t.typeWedding}</option>
+                <option value="sửa nhà">{t.typeReno}</option>
+                <option value="giáo dục">{t.typeEducation}</option>
               </select>
 
               <select 
                 value={formData.goalPriority}
                 onChange={(e) => setFormData({...formData, goalPriority: e.target.value as Goal['goalPriority']})}
               >
-                <option>P1 - Quan trọng</option>
+                <option value="P1">{t.priorityP1}</option>
+                <option value="P2">{t.priorityP2}</option>
+                <option value="P3">{t.priorityP3}</option>
+                <option value="P4">{t.priorityP4}</option>
+                <option value="P5">{t.priorityP5}</option>
               </select>
 
               <textarea
-                placeholder="Tiết kiệm để mua căn hộ đầu tiên"
+                placeholder={t.placeholderNote}
                 value={formData.note}
                 onChange={(e) => setFormData({...formData, note: e.target.value})}
               />
@@ -412,7 +438,7 @@ export default function GoalsPage() {
                 type="button"
                 onClick={handleSubmitGoal}
               >
-                Thêm mục tiêu
+                {t.addGoal}
               </button>
             </form>
           </div>
@@ -456,13 +482,13 @@ export default function GoalsPage() {
               <h2>{goal.goalTitle}</h2>
 
               <div className="goal-card__meta-type">
-                {goal.goalType}
+                {typeMap[goal.goalType]}
               </div>
 
               <p>{goal.note}</p>
 
               <div className="goal-card__meta">
-                Mục tiêu:{' '}
+                {t.target}{' '}
                 {formatTargetDate(
                   goal.deadline,
                 )}
@@ -476,7 +502,7 @@ export default function GoalsPage() {
                 </strong>
 
                 <span>
-                  {monthsLeft} tháng còn lại
+                  {monthsLeft} {t.monthsLeft}
                 </span>
               </div>
 
@@ -485,15 +511,15 @@ export default function GoalsPage() {
               </div>
 
               <div className="goal-card__footer">
-                <span>Đúng tiến độ</span>
+                <span>{t.onSchedule}</span>
 
                 <div>
                   <button type="button" onClick={(e) => { e.stopPropagation(); handleEditGoal(goal); }}>
-                    Sửa
+                    {t.edit}
                   </button>
 
                   <button type="button" onClick={(e) => { e.stopPropagation(); handleDeleteGoal(goal.id); }}>
-                    Xóa
+                    {t.delete}
                   </button>
                 </div>
               </div>
@@ -508,20 +534,20 @@ export default function GoalsPage() {
         <section className="goal-projection">
           <div className="goal-panel-heading">
             <div>
-              <span>Dự đoán</span>
+              <span>{t.projection}</span>
 
               <h2>
                 {selectedGoal.goalTitle}
               </h2>
             </div>
 
-            <span>Đúng kế hoạch</span>
+            <span>{t.onPlan}</span>
           </div>
 
           {/* stats */}
           <div className="goal-stats">
             <article>
-              <span>Mục tiêu</span>
+              <span>{t.goalTarget}</span>
 
               <strong>
                 {formatCompactCurrency(
@@ -531,7 +557,7 @@ export default function GoalsPage() {
             </article>
 
             <article>
-              <span>Mỗi tháng</span>
+              <span>{t.perMonth}</span>
 
               <strong>
                 {formatCompactCurrency(
@@ -541,7 +567,7 @@ export default function GoalsPage() {
             </article>
 
             <article>
-              <span>Hạn</span>
+              <span>{t.deadlineLabel}</span>
 
               <strong>
                 {formatTargetDate(
@@ -551,7 +577,7 @@ export default function GoalsPage() {
             </article>
 
             <article>
-              <span>Tổng goals</span>
+              <span>{t.totalGoalsAmount}</span>
 
               <strong>
                 {formatCompactCurrency(
@@ -577,7 +603,7 @@ export default function GoalsPage() {
                     fontSize: 12,
                   }} />
 
-                <Tooltip content={GoalChartTooltip} />
+                <Tooltip content={(props) => <GoalChartTooltip {...props} projectionLabel={t.projection} />} />
 
                 <ReferenceLine
                   y={chartTarget}
@@ -596,7 +622,7 @@ export default function GoalsPage() {
             </ResponsiveContainer>
 
             <div className="goal-chart__caption">
-              <span>Dự đoán</span>
+              <span>{t.projection}</span>
 
               <strong>
                 {formatProjectionDate(
@@ -607,43 +633,39 @@ export default function GoalsPage() {
           </div>
 
           <p>
-            Số tiền cần tiết kiệm mỗi tháng
-            để đạt mục tiêu đúng hạn.
+            {t.savingRequired}
           </p>
         </section>
 
         {/* recommendations */}
         <section className="goal-recommendations">
-          <h2>Gợi ý</h2>
+          <h2>{t.recommendations}</h2>
 
           <article className="goal-recommendation">
             <strong>
-              Tăng tiền tiết kiệm hàng tháng
+              {t.increaseSavings}
             </strong>
 
             <span>
-              Tăng thêm 10% có thể giúp đạt
-              mục tiêu sớm hơn.
+              {t.increaseSavingsDesc}
             </span>
           </article>
 
           <article className="goal-recommendation">
             <strong>
-              Đa dạng đầu tư
+              {t.diversifyInvestments}
             </strong>
 
             <span>
-              Cân nhắc quỹ index để tăng
-              trưởng dài hạn.
+              {t.diversifyInvestmentsDesc}
             </span>
           </article>
 
           <article className="goal-recommendation">
-            <strong>Quỹ khẩn cấp</strong>
+            <strong>{t.emergencyFund}</strong>
 
             <span>
-              Nên có ít nhất 6 tháng chi phí
-              dự phòng.
+              {t.emergencyFundDesc}
             </span>
           </article>
         </section>

@@ -1,5 +1,7 @@
 // src/locales/translations.ts
 
+import { goalsEn, goalsVi } from './goals';
+
 export const translations = {
     en: {
 
@@ -167,6 +169,8 @@ export const translations = {
 
         japanTripInsight:
             'At your current pace, you can complete your Japan Trip goal in 3 months.',
+
+        ...goalsEn,
     },
 
 
@@ -337,5 +341,7 @@ export const translations = {
 
         japanTripInsight:
             'Với tốc độ hiện tại, bạn có thể hoàn thành mục tiêu Du lịch Nhật Bản trong 3 tháng.',
+
+        ...goalsVi,
     },
 };
